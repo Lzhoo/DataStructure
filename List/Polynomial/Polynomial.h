@@ -7,7 +7,7 @@ typedef struct term{
 	float coef;
 	int expn;
 	struct term *next;
-} *polynomial;
+} term, *polynomial;
 
 void CreatPolyn (polynomial *, int);
 Status DestroyPolyn (polynomial );
