@@ -1,7 +1,7 @@
 #ifndef POLYNOMIAL_H
 #define POLYNOMIAL_H
 
-#include "Status.h"
+#include "../../Status.h"
 
 typedef struct term{
 	float coef;
