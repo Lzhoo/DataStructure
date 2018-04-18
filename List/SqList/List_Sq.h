@@ -1,6 +1,6 @@
 #ifndef LISTSQ_H
 #define LISTSQ_H
-#include "../Status.h"
+#include "../../Status.h"
 
 #define LIST_INIT_SIZE 100
 #define LISTINCREMENT 10
