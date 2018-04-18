@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "BiTree.h"
-#include "Status.h"
+#include "../../Status.h"
 
 #define MAXTREESIZE 100
 BiTree TreeList[MAXTREESIZE];
@@ -19,7 +19,11 @@ int main(void)
     for (int i = 0; i < size-1; i++)
         TreeList[i]->next = TreeList[i+1];
     TreeList[size-1]->next = NULL;
-    PostOrderTraverse(T, &hasNext);
+    BiTree p = TreeList[0];
+    while(p) {
+        printf("%c\n",p->data);
+        p = p->next;
+    }
     ClearBiTree(T);
     return 0;
 }
@@ -37,3 +41,7 @@ Status hasNext(BiTree T)
     if(!T->next) printf("NULL\n");
     return TRUE;
 }
+
+Status PrintElement(BiTree T)
+{
+   
