@@ -1,27 +1,28 @@
 #include "Stack_Sq.h"
 #include <stdlib.h>
 
-Status InitStack(SqStack S)
+Status InitStack(SqStack *pS)
 {
-    S.base = (SElemType *)malloc(STACK_INIT_SIZE * sizeof(SElemType));
-    if (!S.base) exit(OVERFLOW);
-    S.top = S.base;
-    S.stacksize = STACK_INIT_SIZE;
+    DestroyStack(pS);
+    pS->base = (SElemType *)malloc(STACK_INIT_SIZE * sizeof(SElemType));
+    if (!pS->base) exit(OVERFLOW);
+    pS->top = pS->base;
+    pS->stacksize = STACK_INIT_SIZE;
     return OK;
 }
 
-Status DestroyStack(SqStack S)
+Status DestroyStack(SqStack *pS)
 {
-    if (S.base) free(S.base);
-    S.base = NULL;
-    S.top = NULL;
-    S.stacksize = 0;
+    if (pS->base) free(pS->base);
+    pS->base = NULL;
+    pS->top = NULL;
+    pS->stacksize = 0;
     return OK;
 }
 
-Status ClearStack(SqStack S)
+Status ClearStack(SqStack *pS)
 {
-    S.top = S.base;
+    pS->top = pS->base;
     return OK;
 }
 
@@ -33,6 +34,7 @@ Status StackEmpty(SqStack S)
 
 int StackLength(SqStack S)
 {
+    if (S.stacksize <= 0) return -1;
     return S.top - S.base;
 }
 
@@ -43,28 +45,28 @@ Status GetTop(SqStack S, SElemType *pe)
     return OK;
 }
 
-Status Push(SqStack S, SElemType e)
+Status Push(SqStack *pS, SElemType e)
 {
-    if (S.top - S.base >= S.stacksize) {
-        S.base = (SElemType *)realloc(S.base, (S.stacksize+STACKINCREMENT) * sizeof(SElemType));
-        if (!S.base) exit(OVERFLOW);
-        S.top = S.base + S.stacksize;
-        S.stacksize += STACKINCREMENT;
+    if (pS->top - pS->base >= pS->stacksize) {
+        pS->base = (SElemType *)realloc(pS->base, (pS->stacksize+STACKINCREMENT) * sizeof(SElemType));
+        if (!pS->base) exit(OVERFLOW);
+        pS->top = pS->base + pS->stacksize;
+        pS->stacksize += STACKINCREMENT;
     }
-    *S.top++ = e;
+    *(pS->top++) = e;
     return OK;
 }
 
-Status Pop(SqStack S, SElemType *pe)
+Status Pop(SqStack *pS, SElemType *pe)
 {
-    if (S.top == S.base) return ERROR;
-    *pe = * --S.top;
-    int length = S.top - S.base;
-    if (length < S.stacksize/4) {
-        S.base = (SElemType *)realloc(S.base, (S.stacksize/2) * sizeof(SElemType));
-        if (!S.base) exit(OVERFLOW);
-        S.top = S.base + length;
-        S.stacksize /= 2;
+    if (pS->top == pS->base) return ERROR;
+    *pe = * (--(pS->top));
+    int length = pS->top - pS->base;
+    if (length < pS->stacksize/4) {
+        pS->base = (SElemType *)realloc(pS->base, (pS->stacksize/2) * sizeof(SElemType));
+        if (!pS->base) exit(OVERFLOW);
+        pS->top = pS->base + length;
+        pS->stacksize /= 2;
     }
     return OK;
 }
