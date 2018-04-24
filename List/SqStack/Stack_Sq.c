@@ -3,7 +3,6 @@
 
 Status InitStack(SqStack *pS)
 {
-    DestroyStack(pS);
     pS->base = (SElemType *)malloc(STACK_INIT_SIZE * sizeof(SElemType));
     if (!pS->base) exit(OVERFLOW);
     pS->top = pS->base;
