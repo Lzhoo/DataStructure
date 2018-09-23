@@ -6,15 +6,14 @@ int main(int argc, char *argv[])
     SqQueue qa;
     QElemType e;
     InitQueue(&qa);
-    for (int i = 0; i != 1000; i++) EnQueue(&qa, i);
-    printf("len=%d\n", QueueLength(qa));
-    for (int i = 0; i != 10; i++) {
+    printf("%d %d\n", *(qa.head), *(qa.head+1));
+    for (int i = 0; i != 1000; i++) {printf("%d ", i); EnQueue(&qa, i);}
+    printf("len=%d size=%d\n", QueueLength(qa), qa.queuesize);
+    printf("%d %d\n", *(qa.head), *(qa.head+1));
+    for (int i = 0; i != 1000; i++) {
         DeQueue(&qa, &e);
-        printf("%d\n", e);
+        printf("%d len=%d size=%d\n", e, QueueLength(qa), qa.queuesize);
     }
-    ClearQueue(&qa);
-    printf("len=%d\n", QueueLength(qa));
-    DestroyQueue(&qa);
     printf("len=%d\n", QueueLength(qa));
     return 0;
 }

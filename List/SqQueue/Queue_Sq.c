@@ -39,6 +39,7 @@ Status QueueEmpty(SqQueue Q)
 int QueueLength(SqQueue Q)
 {
     if (Q.queuesize <= 0) return -1;
+    if (Q.tail == Q.head) return 0;
     return (Q.tail - Q.head + Q.queuesize) % Q.queuesize;
 }
 
@@ -61,8 +62,8 @@ Status EnQueue(SqQueue *pQ, QElemType e)
         pQ->tail = pcur;
         pQ->queuesize += QUEUEINCREMENT;
     }
-    pQ->tail = shift(*pQ, pQ->tail);
     *(pQ->tail) = e;
+    pQ->tail = shift(*pQ, pQ->tail);
     return OK;
 }
 
